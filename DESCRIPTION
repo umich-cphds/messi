@@ -1,0 +1,25 @@
+Type: Package
+Package: messi
+Title: Mediation Analysis with External Summary-Level Information on Total Effect
+Version: 0.1.1
+Description: Fill in.
+Authors@R: c(
+    person(given = "Jon", family = "Boss", role = c("cre"), email = "gutian@umich.edu"),
+    person(given = "Bhramar", family = "Mukherjee", role = c("aut"), email = "bhramar@umich.edu"),
+    person(given = "Michael", family = "Kleinsasser", role = c("aut"), email = "mkleinsa@umich.edu")
+    )
+Maintainer: Michael Kleinsasser <mkleinsa@umich.edu>
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+Biarch: true
+Depends: 
+    R (>= 3.6.2)
+Imports:
+    MASS, 
+    ggplot2, 
+    patchwork
+URL: https://github.com/umich-biostatistics/MetaIntegration
+BugReports: https://github.com/umich-biostatistics/MetaIntegration/issues
+RoxygenNote: 7.1.1
+Roxygen: list(markdown = TRUE)
