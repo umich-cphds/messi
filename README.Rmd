@@ -14,13 +14,13 @@ knitr::opts_chunk$set(
 
 # R package `messi`
 
-# Ensemble Meta-Prediction Framework to Integrate Multiple Regression Models
+# Mediation Analysis with External Summary-Level Information on the Total Effect of Exposure
 
-`r badger::badge_devel("umich-biostatistics/MetaIntegration", "blue")` `r badger::badge_code_size("umich-biostatistics/MetaIntegration")`
+`r badger::badge_devel("umich-cphds/messi", "blue")`
 
 ## Overview
 
-This `R` package is an ensemble meta-prediction framework to integrate multiple regression models into a current study.
+This `R` package is an ....
 
 ## Installation
 
@@ -32,12 +32,12 @@ install.packages('devtools')
 
 ```{r, eval = FALSE}
 # install the package from Github:
-devtools::install_github('umich-biostatistics/MetaIntegration') 
+devtools::install_github('umich-cphds/messi') 
 ```
 
 Once installed, load the package:
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 library(messi)
 ```
 
@@ -49,6 +49,7 @@ effect.
 ### Test case with null mediation effect
 
 ```{r, eval=FALSE}
+library(MASS)
 set.seed(20230419)
 n <- 500
 p <- 20
@@ -64,7 +65,7 @@ var.T.hat.external <- NULL
 test <- messi(Y = Y, M = M, A = A, C = C, method = method, T.hat.external = T.hat.external,
               var.T.hat.external = var.T.hat.external, s2.fixed = s2.fixed)
 
-plot.messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
+plot_messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
 
 set.seed(20230419)
 n <- 500
@@ -81,7 +82,7 @@ var.T.hat.external <- NULL
 test <- messi(Y = Y, M = M, A = A, C = C, method = method, T.hat.external = T.hat.external,
               var.T.hat.external = var.T.hat.external, s2.fixed = s2.fixed)
 
-plot.messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
+plot_messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
 
 set.seed(20230419)
 n <- 500
@@ -98,7 +99,7 @@ var.T.hat.external <- 0.2
 test <- messi(Y = Y, M = M, A = A, C = C, method = method, T.hat.external = T.hat.external,
               var.T.hat.external = var.T.hat.external, s2.fixed = s2.fixed)
 
-plot.messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
+plot_messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
 
 set.seed(20230419)
 n <- 500
@@ -115,7 +116,7 @@ var.T.hat.external <- 0.2
 test <- messi(Y = Y, M = M, A = A, C = C, method = method, T.hat.external = T.hat.external,
               var.T.hat.external = var.T.hat.external, s2.fixed = s2.fixed)
 
-plot.messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
+plot_messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
 ```
 
 ### Test case with non-null mediation effect
@@ -166,7 +167,7 @@ s2.fixed <- NULL
 test <- messi(Y = Y, M = M, A = A, C = C, method = method, T.hat.external = T.hat.external,
               var.T.hat.external = var.T.hat.external, s2.fixed = s2.fixed)
 
-plot.messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
+plot_messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
 
 set.seed(20230419)
 Y <- sim.dat$Y
@@ -179,7 +180,7 @@ s2.fixed <- NULL
 test <- messi(Y = Y, M = M, A = A, C = C, method = method, T.hat.external = T.hat.external,
               var.T.hat.external = var.T.hat.external, s2.fixed = s2.fixed)
 
-plot.messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
+plot_messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
 
 set.seed(20230419)
 Y <- sim.dat$Y
@@ -192,7 +193,7 @@ s2.fixed <- NULL
 test <- messi(Y = Y, M = M, A = A, C = C, method = method, T.hat.external = T.hat.external,
               var.T.hat.external = var.T.hat.external, s2.fixed = s2.fixed)
 
-plot.messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
+plot_messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
 
 set.seed(20230419)
 Y <- sim.dat$Y
@@ -205,5 +206,5 @@ s2.fixed <- 1
 test <- messi(Y = Y, M = M, A = A, C = C, method = method, T.hat.external = T.hat.external,
               var.T.hat.external = var.T.hat.external, s2.fixed = s2.fixed)
 
-plot.messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
+plot_messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
 ```

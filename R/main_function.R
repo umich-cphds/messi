@@ -2,6 +2,9 @@
 # library(ggplot2)
 # library(patchwork)
 
+utils::globalVariables(c('confint.95', 'lbl', 'lcl.95', 'p.string ucl.95', 'ucl.95', 
+                         'p.string'))
+
 #' Implementation of Mediation with External Summary Statistics Information (MESSI) from Boss et al. (2023).
 #'
 #' @param Y A (n x 1) continuous outcome vector.
@@ -14,6 +17,32 @@
 #' @param n.boot Number of parametric bootstrap draws for obtaining quantile-based confidence intervals for the TE and NDE. Relevant for method = 'Soft EB' and method = 'Soft Fixed'. Can set to NULL for method = 'Unconstrained' and method = 'Hard'.
 #' @param s2.fixed Option to specify the tuning parameter s^2 in the soft constraint model. Only use if method = 'Soft Fixed'.
 #' @return A list containing the (1) point estimates and confidence intervals for the natural direct effect, the natural indirect effect, and the total effect (2) point estimates for all mediation model parameters (3) the asymptotic variance covariance matrix corresponding to alpha_a and beta_m.
+#' @examples
+#' data(Med)
+#' 
+#' Y = Med$Y
+#' M = Med$M
+#' A = Med$A
+#' C = Med$C
+#' T.hat.external = Med$T.hat.external
+#' var.T.hat.external = Med$var.T.hat.external
+#' 
+#' test <- messi(Y = Y, M = M, A = A, C = C, method = 'Unconstrained', T.hat.external = T.hat.external,
+#'               var.T.hat.external = var.T.hat.external, s2.fixed = NULL)
+#' 
+#' n = Med$n
+#' p = Med$p
+#' 
+#' plot_messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, 
+#'            labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
+#'               
+#' test <- messi(Y = Y, M = M, A = A, C = C, method = 'Hard', T.hat.external = T.hat.external,
+#'               var.T.hat.external = var.T.hat.external, s2.fixed = NULL)
+#' 
+#' @importFrom stats coef lm pchisq pnorm quantile rchisq rnorm var vcov
+#' @importFrom MASS mvrnorm
+#' @importFrom ggplot2 ggplot aes geom_pointrange geom_vline ggtitle theme_classic scale_colour_identity scale_y_discrete theme element_blank element_text geom_text theme_void
+#' @export
 messi <- function(Y, M, A, C = NULL, method = "Soft EB", T.hat.external, var.T.hat.external, n.boot = 200, s2.fixed = NULL){
   #Conditional variance of A after regressing out C
   n <- length(Y)
@@ -315,8 +344,29 @@ messi <- function(Y, M, A, C = NULL, method = "Soft EB", T.hat.external, var.T.h
 #' @param beta.m.hat Estimate of beta_m, a (p_m x 1) vector.
 #' @param labels A (p_m x 1) vector of mediator names. Make sure that the labels are in the same order as the mediators appear in the design matrix.
 #' @param asym.var.mat Joint asymptotic variance-covariance matrix of alpha_a and beta_m, a (2p_m x 2p_m) matrix.
+#' @examples
+#' data(Med)
+#' 
+#' Y = Med$Y
+#' M = Med$M
+#' A = Med$A
+#' C = Med$C
+#' T.hat.external = Med$T.hat.external
+#' var.T.hat.external = Med$var.T.hat.external
+#' 
+#' test <- messi(Y = Y, M = M, A = A, C = C, method = 'Unconstrained', T.hat.external = T.hat.external,
+#'               var.T.hat.external = var.T.hat.external, s2.fixed = NULL)
+#' 
+#' n = Med$n
+#' p = Med$p
+#' 
+#' plot_messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, 
+#'            labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
+#'
+#' 
 #' @return Forestplot + maybe numeric output?
-plot.messi <- function(n, alpha.a.hat, beta.m.hat, labels, asym.var.mat){
+#' @export
+plot_messi <- function(n, alpha.a.hat, beta.m.hat, labels, asym.var.mat){
   
   est <- c(alpha.a.hat, beta.m.hat)
   ci.95.low.bound <- est - 1.96*sqrt(diag(asym.var.mat)/n)
@@ -437,7 +487,7 @@ plot.messi <- function(n, alpha.a.hat, beta.m.hat, labels, asym.var.mat){
 # test <- messi(Y = Y, M = M, A = A, C = C, method = method, T.hat.external = T.hat.external,
 #               var.T.hat.external = var.T.hat.external, s2.fixed = s2.fixed)
 # 
-# plot.messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
+# plot_messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
 # 
 # set.seed(20230419)
 # n <- 500
@@ -454,7 +504,7 @@ plot.messi <- function(n, alpha.a.hat, beta.m.hat, labels, asym.var.mat){
 # test <- messi(Y = Y, M = M, A = A, C = C, method = method, T.hat.external = T.hat.external,
 #               var.T.hat.external = var.T.hat.external, s2.fixed = s2.fixed)
 # 
-# plot.messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
+# plot_messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
 # 
 # set.seed(20230419)
 # n <- 500
@@ -471,7 +521,7 @@ plot.messi <- function(n, alpha.a.hat, beta.m.hat, labels, asym.var.mat){
 # test <- messi(Y = Y, M = M, A = A, C = C, method = method, T.hat.external = T.hat.external,
 #               var.T.hat.external = var.T.hat.external, s2.fixed = s2.fixed)
 # 
-# plot.messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
+# plot_messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
 # 
 # set.seed(20230419)
 # n <- 500
@@ -488,7 +538,7 @@ plot.messi <- function(n, alpha.a.hat, beta.m.hat, labels, asym.var.mat){
 # test <- messi(Y = Y, M = M, A = A, C = C, method = method, T.hat.external = T.hat.external,
 #               var.T.hat.external = var.T.hat.external, s2.fixed = s2.fixed)
 # 
-# plot.messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
+# plot_messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
 # 
 # #########################################################################################################
 # ## Test case with non-null mediation effect + confounders
@@ -539,7 +589,7 @@ plot.messi <- function(n, alpha.a.hat, beta.m.hat, labels, asym.var.mat){
 # test <- messi(Y = Y, M = M, A = A, C = C, method = method, T.hat.external = T.hat.external,
 #               var.T.hat.external = var.T.hat.external, s2.fixed = s2.fixed)
 # 
-# plot.messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
+# plot_messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
 # 
 # set.seed(20230419)
 # Y <- sim.dat$Y
@@ -552,7 +602,7 @@ plot.messi <- function(n, alpha.a.hat, beta.m.hat, labels, asym.var.mat){
 # test <- messi(Y = Y, M = M, A = A, C = C, method = method, T.hat.external = T.hat.external,
 #               var.T.hat.external = var.T.hat.external, s2.fixed = s2.fixed)
 # 
-# plot.messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
+# plot_messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
 # 
 # set.seed(20230419)
 # Y <- sim.dat$Y
@@ -565,7 +615,7 @@ plot.messi <- function(n, alpha.a.hat, beta.m.hat, labels, asym.var.mat){
 # test <- messi(Y = Y, M = M, A = A, C = C, method = method, T.hat.external = T.hat.external,
 #               var.T.hat.external = var.T.hat.external, s2.fixed = s2.fixed)
 # 
-# plot.messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
+# plot_messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
 # 
 # set.seed(20230419)
 # Y <- sim.dat$Y
@@ -578,4 +628,4 @@ plot.messi <- function(n, alpha.a.hat, beta.m.hat, labels, asym.var.mat){
 # test <- messi(Y = Y, M = M, A = A, C = C, method = method, T.hat.external = T.hat.external,
 #               var.T.hat.external = var.T.hat.external, s2.fixed = s2.fixed)
 # 
-# plot.messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
+# plot_messi(n = n, alpha.a.hat = test$alpha.a.hat, beta.m.hat = test$beta.m.hat, labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
