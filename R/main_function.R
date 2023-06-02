@@ -365,6 +365,7 @@ messi <- function(Y, M, A, C = NULL, method = "Soft EB", T.hat.external, var.T.h
 #'
 #' 
 #' @return Forestplot + maybe numeric output?
+#' @import patchwork
 #' @export
 plot_messi <- function(n, alpha.a.hat, beta.m.hat, labels, asym.var.mat){
   

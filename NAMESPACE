@@ -2,6 +2,7 @@
 
 export(messi)
 export(plot_messi)
+import(patchwork)
 importFrom(MASS,mvrnorm)
 importFrom(ggplot2,aes)
 importFrom(ggplot2,element_blank)

@@ -17,7 +17,8 @@ Depends:
     R (>= 3.6.2)
 Imports:
     MASS, 
-    ggplot2
+    ggplot2,
+    patchwork
 URL: https://github.com/umich-cphds/messi
 BugReports: https://github.com/umich-cphds/messi/issues
 Roxygen: list(markdown = TRUE)
