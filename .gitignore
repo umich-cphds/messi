@@ -1,3 +1,5 @@
 .Rproj.user
 R/fsn.R
 .DS_Store
+.RData
+.Rhistory
