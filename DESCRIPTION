@@ -2,9 +2,9 @@ Type: Package
 Package: messi
 Title: Mediation Analysis with External Summary-Level Information on Total Effect
 Version: 0.1.1
-Description: Fill in.
+Description: Fits the hard constraint, soft constraint, and unconstrained models in Boss et al. (2023) for mediation analyses with external summary-level information on the total effect.
 Authors@R: c(
-    person(given = "Jon", family = "Boss", role = c("cre"), email = "bossjona@umich.edu"),
+    person(given = "Jonathan", family = "Boss", role = c("cre"), email = "bossjona@umich.edu"),
     person(given = "Bhramar", family = "Mukherjee", role = c("aut"), email = "bhramar@umich.edu"),
     person(given = "Michael", family = "Kleinsasser", role = c("aut"), email = "mkleinsa@umich.edu")
     )
