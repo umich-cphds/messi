@@ -5,7 +5,19 @@
 utils::globalVariables(c('confint.95', 'lbl', 'lcl.95', 'p.string ucl.95', 'ucl.95', 
                          'p.string'))
 
+prog_bar_endcap = function() {
+  cat('|')
+}
+
+prog_bar_progress = function(i, n) {
+  if(i %% floor(0.02*n) == 0) cat('+')
+}
+
 #' Implementation of Mediation with External Summary Statistics Information (MESSI) from Boss et al. (2023).
+#' 
+#' @details
+#' The Soft EB method should be the default method if the user is not sure which 
+#' method to use.
 #'
 #' @param Y A (n x 1) continuous outcome vector.
 #' @param M A (n x p_m) matrix of mediators.
@@ -214,8 +226,9 @@ messi <- function(Y, M, A, C = NULL, method = "Soft EB", T.hat.external, var.T.h
     nie.boot <- rep(NA, n.boot)
     nde.boot <- rep(NA, n.boot)
     te.boot <- rep(NA, n.boot)
+    prog_bar_endcap()
     for(r in 1:n.boot){
-      print(r)
+      prog_bar_progress(r, n.boot)
       epsilon.y <- rnorm(n = n, mean = 0, sd = sqrt(sigma.e.sq.hat))
       if(is.null(C)){
         gen.M <- matrix(1, nrow = n, ncol = 1)%*%t(alpha.c.hat) + matrix(A, ncol = 1)%*%matrix(alpha.a.hat, nrow = 1) + mvrnorm(n = n, mu = rep(0, ncol(M)), Sigma = Sigma.m.hat)
@@ -243,7 +256,7 @@ messi <- function(Y, M, A, C = NULL, method = "Soft EB", T.hat.external, var.T.h
       nie.boot[r] <- sum(final.fit$alpha.a.hat*final.fit$beta.m.hat)
       te.boot[r] <- nde.boot[r] + nie.boot[r]
     }
-    
+    prog_bar_endcap()
     delta.nde <- quantile(nde.boot - nde.est, probs = c(0.025,0.975))
     nde.ci95 <- c(nde.est - delta.nde[2], nde.est - delta.nde[1])
     
@@ -302,8 +315,9 @@ messi <- function(Y, M, A, C = NULL, method = "Soft EB", T.hat.external, var.T.h
     nie.boot <- rep(NA, n.boot)
     nde.boot <- rep(NA, n.boot)
     te.boot <- rep(NA, n.boot)
+    prog_bar_endcap()
     for(r in 1:n.boot){
-      print(r)
+      prog_bar_progress(r, n.boot)
       epsilon.y <- rnorm(n = n, mean = 0, sd = sqrt(sigma.e.sq.hat))
       if(is.null(C)){
         gen.M <- matrix(1, nrow = n, ncol = 1)%*%t(alpha.c.hat) + matrix(A, ncol = 1)%*%matrix(alpha.a.hat, nrow = 1) + mvrnorm(n = n, mu = rep(0, ncol(M)), Sigma = Sigma.m.hat)
@@ -319,7 +333,7 @@ messi <- function(Y, M, A, C = NULL, method = "Soft EB", T.hat.external, var.T.h
       nie.boot[r] <- sum(final.fit$alpha.a.hat*final.fit$beta.m.hat)
       te.boot[r] <- nde.boot[r] + nie.boot[r]
     }
-    
+    prog_bar_endcap()
     delta.nde <- quantile(nde.boot - nde.est, probs = c(0.025,0.975))
     nde.ci95 <- c(nde.est - delta.nde[2], nde.est - delta.nde[1])
     
@@ -461,13 +475,15 @@ plot_messi <- function(n, alpha.a.hat, beta.m.hat, labels, asym.var.mat){
   
   #Invisible return matrix, but always plot
   
-  p_alpha_combined #Plot of alpha.a
-  p_beta_combined #Plot of beta.m
+  #p_alpha_combined #Plot of alpha.a
+  #p_beta_combined #Plot of beta.m
+  return(list(data_table1  = data_table1,
+              data_table2  = data_table2,
+              data_table3  = data_table3,
+              plot_alpha.a = p_alpha_combined,
+              plot_beta.m  = p_beta_combined))
 }
 
-# setwd("C:/Users/John Boss/Desktop/Apples and Oranges Backup/Jonathan/Documents/GSRA Presentations/High Dimensional Mediation Analysis/MESSI R Package/")
-
-# source("fns.R")
 # 
 # #########################################################################################################
 # ## Test case with null mediation effect

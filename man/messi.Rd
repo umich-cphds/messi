@@ -41,6 +41,10 @@ A list containing the (1) point estimates and confidence intervals for the natur
 \description{
 Implementation of Mediation with External Summary Statistics Information (MESSI) from Boss et al. (2023).
 }
+\details{
+The Soft EB method should be the default method if the user is not sure which
+method to use.
+}
 \examples{
 data(Med)
 
