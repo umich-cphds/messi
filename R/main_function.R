@@ -378,7 +378,7 @@ messi <- function(Y, M, A, C = NULL, method = "Soft EB", T.hat.external, var.T.h
 #'            labels = paste0("M",1:p), asym.var.mat = test$asym.var.mat)
 #'
 #' 
-#' @return Forestplot + maybe numeric output?
+#' @return Data frames and forestplots summarizing alpha_a and beta_m estimation.
 #' @import patchwork
 #' @export
 plot_messi <- function(n, alpha.a.hat, beta.m.hat, labels, asym.var.mat){
@@ -477,11 +477,10 @@ plot_messi <- function(n, alpha.a.hat, beta.m.hat, labels, asym.var.mat){
   
   #p_alpha_combined #Plot of alpha.a
   #p_beta_combined #Plot of beta.m
-  return(list(data_table1  = data_table1,
-              data_table2  = data_table2,
-              data_table3  = data_table3,
-              plot_alpha.a = p_alpha_combined,
-              plot_beta.m  = p_beta_combined))
+  return(list(data_table_alpha  = plot.alpha,
+              data_table_beta  = plot.beta,
+              plot_alpha_a = p_alpha_combined,
+              plot_beta_m  = p_beta_combined))
 }
 
 # 
