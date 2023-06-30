@@ -20,7 +20,8 @@ Depends:
 Imports:
     MASS, 
     ggplot2,
-    patchwork
+    patchwork,
+    progress
 URL: https://github.com/umich-cphds/messi
 BugReports: https://github.com/umich-cphds/messi/issues
 Roxygen: list(markdown = TRUE)

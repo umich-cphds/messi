@@ -5,14 +5,6 @@
 utils::globalVariables(c('confint.95', 'lbl', 'lcl.95', 'p.string ucl.95', 'ucl.95', 
                          'p.string'))
 
-prog_bar_endcap = function() {
-  cat('|')
-}
-
-prog_bar_progress = function(i, n) {
-  if(i %% floor(0.02*n) == 0) cat('+')
-}
-
 #' Implementation of Mediation with External Summary Statistics Information (MESSI) from Boss et al. (2023).
 #' 
 #' @details
@@ -54,6 +46,7 @@ prog_bar_progress = function(i, n) {
 #' @importFrom stats coef lm pchisq pnorm quantile rchisq rnorm var vcov
 #' @importFrom MASS mvrnorm
 #' @importFrom ggplot2 ggplot aes geom_pointrange geom_vline ggtitle theme_classic scale_colour_identity scale_y_discrete theme element_blank element_text geom_text theme_void
+#' @importFrom progress progress_bar
 #' @export
 messi <- function(Y, M, A, C = NULL, method = "Soft EB", T.hat.external, var.T.hat.external, n.boot = 200, s2.fixed = NULL){
   #Conditional variance of A after regressing out C
@@ -226,9 +219,9 @@ messi <- function(Y, M, A, C = NULL, method = "Soft EB", T.hat.external, var.T.h
     nie.boot <- rep(NA, n.boot)
     nde.boot <- rep(NA, n.boot)
     te.boot <- rep(NA, n.boot)
-    prog_bar_endcap()
+    pb = progress_bar$new(total = n.boot)
     for(r in 1:n.boot){
-      prog_bar_progress(r, n.boot)
+      pb$tick()
       epsilon.y <- rnorm(n = n, mean = 0, sd = sqrt(sigma.e.sq.hat))
       if(is.null(C)){
         gen.M <- matrix(1, nrow = n, ncol = 1)%*%t(alpha.c.hat) + matrix(A, ncol = 1)%*%matrix(alpha.a.hat, nrow = 1) + mvrnorm(n = n, mu = rep(0, ncol(M)), Sigma = Sigma.m.hat)
@@ -256,7 +249,6 @@ messi <- function(Y, M, A, C = NULL, method = "Soft EB", T.hat.external, var.T.h
       nie.boot[r] <- sum(final.fit$alpha.a.hat*final.fit$beta.m.hat)
       te.boot[r] <- nde.boot[r] + nie.boot[r]
     }
-    prog_bar_endcap()
     delta.nde <- quantile(nde.boot - nde.est, probs = c(0.025,0.975))
     nde.ci95 <- c(nde.est - delta.nde[2], nde.est - delta.nde[1])
     
@@ -315,9 +307,9 @@ messi <- function(Y, M, A, C = NULL, method = "Soft EB", T.hat.external, var.T.h
     nie.boot <- rep(NA, n.boot)
     nde.boot <- rep(NA, n.boot)
     te.boot <- rep(NA, n.boot)
-    prog_bar_endcap()
+    pb = progress_bar$new(total = n.boot)
     for(r in 1:n.boot){
-      prog_bar_progress(r, n.boot)
+      pb$tick()
       epsilon.y <- rnorm(n = n, mean = 0, sd = sqrt(sigma.e.sq.hat))
       if(is.null(C)){
         gen.M <- matrix(1, nrow = n, ncol = 1)%*%t(alpha.c.hat) + matrix(A, ncol = 1)%*%matrix(alpha.a.hat, nrow = 1) + mvrnorm(n = n, mu = rep(0, ncol(M)), Sigma = Sigma.m.hat)
@@ -333,7 +325,6 @@ messi <- function(Y, M, A, C = NULL, method = "Soft EB", T.hat.external, var.T.h
       nie.boot[r] <- sum(final.fit$alpha.a.hat*final.fit$beta.m.hat)
       te.boot[r] <- nde.boot[r] + nie.boot[r]
     }
-    prog_bar_endcap()
     delta.nde <- quantile(nde.boot - nde.est, probs = c(0.025,0.975))
     nde.ci95 <- c(nde.est - delta.nde[2], nde.est - delta.nde[1])
     

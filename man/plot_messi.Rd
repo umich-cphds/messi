@@ -18,7 +18,7 @@ plot_messi(n, alpha.a.hat, beta.m.hat, labels, asym.var.mat)
 \item{asym.var.mat}{Joint asymptotic variance-covariance matrix of alpha_a and beta_m, a (2p_m x 2p_m) matrix.}
 }
 \value{
-Forestplot + maybe numeric output?
+Data frames and forestplots summarizing alpha_a and beta_m estimation.
 }
 \description{
 Forestplot to Summarize Estimation and Inference on alpha_a and beta_m.

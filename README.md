@@ -9,7 +9,9 @@
 
 ## Overview
 
-This `R` package is an ….
+This `R` package fits the hard constraint, soft constraint, and
+unconstrained models in Boss et al. (2023) for mediation analyses with
+external summary-level information on the total effect.
 
 ## Installation
 
