@@ -6,9 +6,9 @@ Description: Fits the hard constraint, soft constraint, and unconstrained models
     in Boss et al. (2023) for mediation analyses with external summary-level 
     information on the total effect.
 Authors@R: c(
-    person(given = "Jonathan", family = "Boss", role = c("cre"), email = "bossjona@umich.edu"),
+    person(given = "Jonathan", family = "Boss", role = c("aut"), email = "bossjona@umich.edu"),
     person(given = "Bhramar", family = "Mukherjee", role = c("aut"), email = "bhramar@umich.edu"),
-    person(given = "Michael", family = "Kleinsasser", role = c("aut"), email = "mkleinsa@umich.edu")
+    person(given = "Michael", family = "Kleinsasser", role = c("cre"), email = "mkleinsa@umich.edu")
     )
 Maintainer: Michael Kleinsasser <mkleinsa@umich.edu>
 License: GPL-2
