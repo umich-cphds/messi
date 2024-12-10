@@ -2,14 +2,14 @@
 % Please edit documentation in R/main_function.R
 \name{messi}
 \alias{messi}
-\title{Implementation of Mediation with External Summary Statistics Information (MESSI) from Boss et al. (2023).}
+\title{Implementation of Mediation with External Summary Statistic Information (MESSI) from Boss et al. (2024).}
 \usage{
 messi(
   Y,
   M,
   A,
   C = NULL,
-  method = "Soft EB",
+  method = "MESSI EB",
   T.hat.external,
   var.T.hat.external,
   n.boot = 200,
@@ -25,24 +25,24 @@ messi(
 
 \item{C}{A (n x p_c) matrix of confounders and adjustment covariates. If there are no confounders or adjustment covariates set C = NULL.}
 
-\item{method}{A string specifying which method to use. Options include 'Unconstrained', 'Hard', 'Soft EB', and 'Soft Fixed'. Default is 'Soft EB'.}
+\item{method}{A string specifying which method to use. Options include 'Unconstrained', 'Hard', 'MESSI EB', and 'MESSI Fixed'. Default is 'MESSI EB'.}
 
 \item{T.hat.external}{External estimate of the total effect. Set to NULL if method = 'Unconstrained'.}
 
 \item{var.T.hat.external}{Estimated variance of the external estimator of the total effect. Set to NULL if method = 'Unconstrained' or method = 'Hard'.}
 
-\item{n.boot}{Number of parametric bootstrap draws for obtaining quantile-based confidence intervals for the TE and NDE. Relevant for method = 'Soft EB' and method = 'Soft Fixed'. Can set to NULL for method = 'Unconstrained' and method = 'Hard'.}
+\item{n.boot}{Number of parametric bootstrap draws for obtaining quantile-based confidence intervals for the TE and NDE. Relevant for method = 'MESSI EB' and method = 'MESSI Fixed'. Can set to NULL for method = 'Unconstrained' and method = 'Hard'.}
 
-\item{s2.fixed}{Option to specify the tuning parameter s^2 in the soft constraint model. Only use if method = 'Soft Fixed'.}
+\item{s2.fixed}{Option to specify the tuning parameter s^2 in the MESSI model. Only use if method = 'MESSI Fixed'.}
 }
 \value{
 A list containing the (1) point estimates and confidence intervals for the natural direct effect, the natural indirect effect, and the total effect (2) point estimates for all mediation model parameters (3) the asymptotic variance covariance matrix corresponding to alpha_a and beta_m.
 }
 \description{
-Implementation of Mediation with External Summary Statistics Information (MESSI) from Boss et al. (2023).
+Implementation of Mediation with External Summary Statistic Information (MESSI) from Boss et al. (2024).
 }
 \details{
-The Soft EB method should be the default method if the user is not sure which
+The MESSI EB method should be the default method if the user is not sure which
 method to use.
 }
 \examples{

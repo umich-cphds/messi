@@ -1,10 +1,10 @@
 Type: Package
 Package: messi
-Title: Mediation Analysis with External Summary-Level Information on Total Effect
+Title: Mediation with External Summary Statistic Information
 Version: 0.1.1
-Description: Fits the hard constraint, soft constraint, and unconstrained models 
-    in Boss et al. (2023) for mediation analyses with external summary-level 
-    information on the total effect.
+Description: Fits the MESSI, hard constraint, and unconstrained models in Boss 
+    et al. (2023) <arXiv:2306.17347> for mediation analyses with external 
+    summary-level information on the total effect.
 Authors@R: c(
     person(given = "Jonathan", family = "Boss", role = c("aut"), email = "bossjona@umich.edu"),
     person(given = "Bhramar", family = "Mukherjee", role = c("aut"), email = "bhramar@umich.edu"),
@@ -25,4 +25,4 @@ Imports:
 URL: https://github.com/umich-cphds/messi
 BugReports: https://github.com/umich-cphds/messi/issues
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
