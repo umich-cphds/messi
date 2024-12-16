@@ -1,7 +1,7 @@
 Type: Package
 Package: messi
 Title: Mediation with External Summary Statistic Information
-Version: 0.1.1
+Version: 0.1.2
 Description: Fits the MESSI, hard constraint, and unconstrained models in Boss 
     et al. (2023) <arXiv:2306.17347> for mediation analyses with external 
     summary-level information on the total effect.

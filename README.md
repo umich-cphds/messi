@@ -5,13 +5,13 @@
 
 # Mediation Analysis with External Summary-Level Information on the Total Effect of Exposure
 
-[![](https://img.shields.io/badge/devel%20version-0.1.1-blue.svg)](https://github.com/umich-cphds/messi)
+[![](https://img.shields.io/badge/devel%20version-0.1.2-blue.svg)](https://github.com/umich-cphds/messi)
 
 ## Overview
 
-This `R` package fits the hard constraint, soft constraint, and
-unconstrained models in Boss et al. (2023) for mediation analyses with
-external summary-level information on the total effect.
+This `R` package tits the MESSI, hard constraint, and unconstrained
+models in Boss et al. (2023) \<arXiv:2306.17347\> for mediation analyses
+with external summary-level information on the total effect.
 
 ## Installation
 
@@ -82,7 +82,7 @@ Y <- rnorm(n = n, mean = 0, sd = 1)
 M <- mvrnorm(n = n, mu = rep(0, p), Sigma = diag(1, p))
 A <- rnorm(n = n, mean = 0, sd = 1)
 C <- NULL
-method <- "Soft EB"
+method <- "MESSI EB"
 s2.fixed <- NULL
 T.hat.external <- 0
 var.T.hat.external <- 0.2
@@ -99,7 +99,7 @@ Y <- rnorm(n = n, mean = 0, sd = 1)
 M <- mvrnorm(n = n, mu = rep(0, p), Sigma = diag(1, p))
 A <- rnorm(n = n, mean = 0, sd = 1)
 C <- NULL
-method <- "Soft Fixed"
+method <- "MESSI Fixed"
 s2.fixed <- 1
 T.hat.external <- 0
 var.T.hat.external <- 0.2
